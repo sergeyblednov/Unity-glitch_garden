@@ -16,6 +16,7 @@ public class MusicManager : MonoBehaviour {
 
 	void Start() {
 		audioSource = GetComponent<AudioSource> ();
+		audioSource.volume = PlayerPrefsManager.GetMasterVolume ();
 	}
 
 	void OnLevelWasLoaded (int level)
@@ -26,5 +27,10 @@ public class MusicManager : MonoBehaviour {
 			audioSource.loop = true;
 			audioSource.Play ();
 		}
+	}
+
+	public void SetVolume (float volume)
+	{
+		audioSource.volume = volume;
 	}
 }
