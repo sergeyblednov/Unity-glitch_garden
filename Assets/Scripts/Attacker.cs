@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent (typeof (Rigidbody2D))]
 public class Attacker : MonoBehaviour {
 
+	[Tooltip ("Time then every attacker can seen in seconds")]
+	public float seenEverySeconds;
 	private float currentSpeed;
 	private GameObject currentTarget;
 	private Animator animator;
