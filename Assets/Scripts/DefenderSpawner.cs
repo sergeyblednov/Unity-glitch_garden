@@ -5,9 +5,12 @@ using UnityEngine;
 public class DefenderSpawner : MonoBehaviour {
 
 	private GameObject parent;
+	private StarsDisplay starsDislay;
 
 	// Use this for initialization
 	void Start () {
+
+		starsDislay = GameObject.FindObjectOfType<StarsDisplay> ();
 		parent = GameObject.Find ("Defenders");
 		if (!parent) {
 			parent = new GameObject ("Defenders");
@@ -21,11 +24,22 @@ public class DefenderSpawner : MonoBehaviour {
 
 	void OnMouseDown () 
 	{
-		if (Button.selectedDefender) {
+		GameObject defender = Button.selectedDefender;
+		int defenderCost = defender.GetComponent<Defender> ().starCost;
+		bool enoughtStars = starsDislay.UseStars (defenderCost) == StarsDisplay.Status.SUCCESS;
+		if (defender && enoughtStars) {				
 			Vector2 pos = SnapToGrip (CalculateWorldPointOfMouseClick ());
-			GameObject defender = Instantiate (Button.selectedDefender, pos, Quaternion.identity);
-			defender.transform.parent = parent.transform;
+			SpawnDefender (pos, defender);
+		} else {
+			Debug.Log ("Insufficient stars");
 		}
+			
+	}
+
+	void SpawnDefender (Vector2 pos, GameObject defender)
+	{
+		GameObject newDefender = Instantiate (defender, pos, Quaternion.identity);
+		newDefender.transform.parent = parent.transform;
 	}
 
 	#region Helpers methods

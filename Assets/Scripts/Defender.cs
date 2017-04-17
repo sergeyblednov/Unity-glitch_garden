@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class Defender : MonoBehaviour {
 
-	void OnTriggerEnter2D (Collider2D collider)
+	public int starCost = 100;
+
+	private StarsDisplay starsDisplay;
+
+	void Start ()
 	{
-		
+		starsDisplay = GameObject.FindObjectOfType<StarsDisplay> ();
+	}
+
+	public void AddStars (int amount)
+	{
+		print (amount + " added stars");
+		starsDisplay.AddStars (amount);
 	}
 }
